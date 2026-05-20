@@ -29,7 +29,9 @@ def generate_plot(file_path):
         'BEGINING OF WAITING': 'orange', # обработка опечатки из лога
         'READING': 'green',
         'RECORD': 'red',
-        'TRANSITION TO LIBERATION': 'gray'
+        'TRANSITION TO LIBERATION': 'gray',
+        'NO DATA AVAILABLE, SKIP': 'orange',
+        'NO EMPTY PAGES, SKIP':'orange'
     }
 
     # Для построения "линий" состояний нам нужно знать время окончания
