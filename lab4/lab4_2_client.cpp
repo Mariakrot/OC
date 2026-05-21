@@ -57,7 +57,7 @@ int main() {
                     cout << "CreateFile failed: " << GetLastError() << "\n"; break;
                 }
                 
-                // Явно устанавливаем режим чтения в байтовый (важно для ReadFileEx)
+                // Явно устанавливаем режим чтения в байтовый 
                 DWORD mode = PIPE_READMODE_BYTE;
                 SetNamedPipeHandleState(hPipe, &mode, NULL, NULL);
                 

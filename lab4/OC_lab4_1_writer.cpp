@@ -45,18 +45,16 @@ int main() {
     LPVOID pView = MapViewOfFile(hMap, FILE_MAP_ALL_ACCESS, 0, 0, totalSize);
 
     volatile char* pPageState = (volatile char*)((char*)pView + 4);
-    // Инициализация не нужна, это делает первый процесс (обычно читатель), 
-    // но можно продублировать для надежности.
 
     VirtualLock(pView, totalSize);
 
     for (int i = 0; i < ITERATIONS; ++i) {
         LogState(ofs, "BEGINNING OF WAITING");
         
-        // Ждем разрешения на запись (алгоритм Читатели-Писатели)
+        // Ждем разрешения на запись 
         WaitForSingleObject(hWriterSem, INFINITE);
         
-        // --- ПОИСК СВОБОДНОЙ СТРАНИЦЫ ---
+        // поиск свободной страницы
         int pageIdx = -1;
         
         WaitForSingleObject(hMetaMutex, INFINITE);
@@ -70,7 +68,7 @@ int main() {
         ReleaseMutex(hMetaMutex);
 
         if (pageIdx != -1) {
-            // --- ЗАПИСЬ ---
+            // запись
             LogState(ofs, "RECORD", pageIdx);
             char* data = (char*)pView + (pageIdx * pageSize);
             data[0] = 'W'; // Записываем данные
